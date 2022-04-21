@@ -1,0 +1,26 @@
+{
+    "/esummary": {
+        "get": {
+            "x-mojo-to": "Com::PTFSEurope::Pubmed::Api#esummary",
+            "operationId": "ApiEsummaryPubmed",
+            "tags": ["pubmed", "esummary"],
+            "parameters": [
+                {
+                    "name": "pmid",
+                    "in": "query",
+                    "description": "The PMID being searched for",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "produces": [
+                "application/json"
+            ],
+            "responses": {
+                "200": {
+                    "description": "The result of the 'esummary' call to the PubMed API"
+                }
+            }
+        }
+    }
+}
