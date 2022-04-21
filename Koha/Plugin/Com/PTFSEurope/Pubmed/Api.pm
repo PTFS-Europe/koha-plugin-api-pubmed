@@ -16,7 +16,7 @@ sub esummary {
 
     my $base_url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi";
 
-    my $doi = $c->validation->param('pmid') || '';
+    my $pmid = $c->validation->param('pmid') || '';
 
     if (!$pmid || length $pmid == 0) {
         _return_response({ error => 'No PMID supplied' }, $c);
