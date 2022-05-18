@@ -39,6 +39,69 @@ sub esummary {
     }
 }
 
+sub parse_to_ill {
+    # Validate what we've received
+    my $c = shift->openapi->valid_input or return;
+
+    my $body = $c->validation->param('body');
+
+    # We only use the first result we receive
+    my $uid = $body->{result}->{uids}->[0];
+    my $metadata = $body->{result}->{$uid};
+
+    # Map Koha core ILL props to Pubmed
+    my $mapping = {
+        article_author => sub {
+            my $authors = shift->{authors};
+            my @auth_arr = ();
+            foreach my $author(@{$authors}) {
+                push @auth_arr, $author->{name};
+            }
+            return join('; ', @auth_arr);
+        },
+        article_title => sub {
+            return shift->{title};
+        },
+        associated_id => sub {
+            my $ids = shift->{articleids};
+            foreach my $id(@{$ids}) {
+                if ($id->{idtype} eq 'pubmed') {
+                    return $id->{value};
+                }
+            }
+        },
+        issn => sub {
+            return shift->{issn};
+        },
+        issue => sub {
+            return shift->{issue};
+        },
+        pages => sub {
+            return shift->{pages};
+        },
+        publisher => sub {
+            return shift->{publishername};
+        },
+        title => sub {
+            return shift->{title};
+        },
+        published_date => sub {
+            return shift->{pubdate};
+        }
+    };
+
+    my $return = {};
+
+    while (my ($k, $v) = each %{$mapping}) {
+        $return->{$k} = $v->($metadata);
+    }
+
+    _return_response(
+        { success => $return },
+        $c
+    );
+}
+
 sub _return_response {
     my ( $response, $c ) = @_;
     return $c->render(
