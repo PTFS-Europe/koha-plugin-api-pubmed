@@ -43,7 +43,8 @@ sub parse_to_ill {
     # Validate what we've received
     my $c = shift->openapi->valid_input or return;
 
-    my $body = $c->validation->param('body');
+    my $payload = $c->validation->param('body');
+    my $body = $payload->{results}->{result};
 
     # We only use the first result we receive
     my $uid = $body->{result}->{uids}->[0];
