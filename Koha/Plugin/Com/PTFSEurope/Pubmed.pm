@@ -42,6 +42,7 @@ sub new {
 
 sub provides_api {
     return {
+        name                  => 'PubMed',
         api_namespace         => api_namespace(),
         type                  => 'search',
         identifiers_supported => ['pmid'],
