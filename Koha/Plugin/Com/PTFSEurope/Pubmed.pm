@@ -39,16 +39,21 @@ sub new {
     return $self;
 }
 
-
 sub provides_api {
     return {
-        name                  => 'PubMed',
-        api_namespace         => api_namespace(),
-        type                  => 'search',
-        identifiers_supported => ['pmid'],
-        endpoint              => '/esummary',
-        method                => 'GET',
-        provide_identifier_in => 'query'
+        name                  => 'PubMed', # Display name
+        api_namespace         => api_namespace(), # API namespace for URL forming
+        type                  => 'search', # Type of API this is
+        identifiers_supported => [ # The identifiers this service can use
+            pmid => {
+                regex => qr/^(?<identifier>\d{1,8})$/, # Regex for identifying these identifiers
+                param_name => 'pmid' # When passing one of these identifiers to the API, name of the parameter
+            }
+        ],
+        search_endpoint       => '/esummary', # The endpoint for accessing this API
+        ill_parse_endpoint    => '/parse_to_ill', # The endpoint for parsing search results into ILL schema
+        method                => 'GET', # The HTTP method to use
+        provide_identifier_in => 'query' # Where to provide identifiers in calls
     };
 }
 
