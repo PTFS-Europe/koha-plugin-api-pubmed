@@ -11,7 +11,7 @@ use LWP::UserAgent;
 use HTTP::Request;
 use JSON qw( encode_json decode_json );
 
-our $VERSION = "1.0.0";
+our $VERSION = "1.1.0";
 
 our $metadata = {
     name            => 'Pubmed',
@@ -37,6 +37,18 @@ sub new {
     my $self = $class->SUPER::new($args);
 
     return $self;
+}
+
+
+sub provides_api {
+    return {
+        api_namespace         => api_namespace(),
+        type                  => 'search',
+        identifiers_supported => ['pmid'],
+        endpoint              => '/esummary',
+        method                => 'GET',
+        provide_identifier_in => 'query'
+    };
 }
 
 sub api_routes {
