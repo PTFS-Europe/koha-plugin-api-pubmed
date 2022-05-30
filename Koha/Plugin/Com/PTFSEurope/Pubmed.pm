@@ -44,12 +44,12 @@ sub provides_api {
         name                  => 'PubMed', # Display name
         api_namespace         => api_namespace(), # API namespace for URL forming
         type                  => 'search', # Type of API this is
-        identifiers_supported => [ # The identifiers this service can use
+        identifiers_supported => { # The identifiers this service can use
             pmid => {
                 regex      => '/^(?<identifier>\d{1,8})$/', # Regex for identifying these identifiers
                 param_name => 'pmid' # When passing one of these identifiers to the API, name of the parameter
             }
-        ],
+        },
         search_endpoint       => '/esummary', # The endpoint for accessing this API
         ill_parse_endpoint    => '/parse_to_ill', # The endpoint for parsing search results into ILL schema
         method                => 'GET', # The HTTP method to use
