@@ -46,7 +46,7 @@ sub provides_api {
         type                  => 'search', # Type of API this is
         identifiers_supported => { # The identifiers this service can use
             pmid => {
-                regex      => '/^(?<identifier>\d{1,8})$/', # Regex for identifying these identifiers
+                regex      => '^(?<identifier>\d{1,8})$', # Regex for identifying these identifiers
                 param_name => 'pmid' # When passing one of these identifiers to the API, name of the parameter
             }
         },
