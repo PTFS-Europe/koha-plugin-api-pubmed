@@ -52,6 +52,9 @@ sub parse_to_ill {
 
     # Map Koha core ILL props to Pubmed
     my $mapping = {
+        pmid => sub {
+            return shift->{pmid};
+        },
         article_author => sub {
             my $authors = shift->{authors};
             my @auth_arr = ();
