@@ -52,10 +52,10 @@ sub parse_to_ill {
 
     # Map Koha core ILL props to Pubmed
     my $mapping = {
-        pmid => sub {
-            return shift->{pmid};
+        pubmedid => sub {
+            return shift->{uid};
         },
-        article_author => sub {
+        author => sub {
             my $authors = shift->{authors};
             my @auth_arr = ();
             foreach my $author(@{$authors}) {
@@ -87,10 +87,13 @@ sub parse_to_ill {
             return shift->{publishername};
         },
         title => sub {
-            return shift->{title};
+            return shift->{fulljournalname};
         },
-        published_date => sub {
-            return shift->{pubdate};
+        volume => sub {
+            return shift->{volume};
+        },
+        year => sub {
+            return substr( shift->{sortpubdate}, 0, 4 );
         }
     };
 
