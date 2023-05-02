@@ -55,7 +55,7 @@ sub parse_to_ill {
         pubmedid => sub {
             return shift->{uid};
         },
-        article_author => sub {
+        author => sub {
             my $authors = shift->{authors};
             my @auth_arr = ();
             foreach my $author(@{$authors}) {
@@ -64,7 +64,7 @@ sub parse_to_ill {
             return join('; ', @auth_arr);
         },
         article_title => sub {
-            return shift->{vernaculartitle};
+            return shift->{title};
         },
         associated_id => sub {
             my $ids = shift->{articleids};
